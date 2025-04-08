@@ -40,19 +40,19 @@ pub enum Block {
     Heading1 {
         #[serde(flatten)]
         common: BlockCommon,
-        heading_1: Text,
+        heading_1: HeadingText,
     },
     #[serde(rename = "heading_2")]
     Heading2 {
         #[serde(flatten)]
         common: BlockCommon,
-        heading_2: Text,
+        heading_2: HeadingText,
     },
     #[serde(rename = "heading_3")]
     Heading3 {
         #[serde(flatten)]
         common: BlockCommon,
-        heading_3: Text,
+        heading_3: HeadingText,
     },
     #[serde(rename = "callout")]
     CallOut {
@@ -382,6 +382,13 @@ pub struct TextAndChildren {
     pub rich_text: Vec<RichText>,
     pub children: Option<Vec<Block>>,
     pub color: TextColor,
+}
+
+#[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Clone)]
+pub struct HeadingText {
+    pub rich_text: Vec<RichText>,
+    pub color: TextColor,
+    pub is_toggleable: bool,
 }
 
 #[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Clone)]
