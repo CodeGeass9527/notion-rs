@@ -2,7 +2,7 @@
 #name = "notion-rs" #改这个
 version = "0.1.0"
 edition = "2021"
-authors = ["Kali-Team <root@kali-team.cn>"]
+authors = ["CodeGeass9527"]
 include = ["LICENSE", "Cargo.toml", "src/**/*.rs"]
 license-file = "LICENSE"
 license = "GPL-3.0-only"
@@ -33,4 +33,4 @@ opt-level = 3
 
 
 [workspace.dependencies]
-notion-sdk = { path = "notion-sdk", version = "0.1.0" }
+notion-sdk = { path = "notion-sdk", version = "0.1.1" }

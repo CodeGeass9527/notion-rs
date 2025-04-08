@@ -2,8 +2,8 @@
 name = "notion-sdk"
 edition = "2021"
 description = "A rust implementation of the nvd-yew."
-homepage = "https://github.com/emo-crab/notion-rs"
-repository = "https://github.com/emo-crab/notion-rs"
+homepage = "https://github.com/CodeGeass9527/notion-rs"
+repository = "https://github.com/CodeGeass9527/notion-rs"
 authors = ["Kali-Team <root@kali-team.cn>"]
 readme = "README.md"
 license = "GPL-3.0-only"

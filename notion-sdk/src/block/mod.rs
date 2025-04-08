@@ -373,8 +373,8 @@ pub struct BlockCommon {
     pub created_time: DateTime<Utc>,
     pub last_edited_time: DateTime<Utc>,
     pub has_children: bool,
-    pub created_by: UserCommon,
-    pub last_edited_by: UserCommon,
+    pub created_by: Option<UserCommon>,
+    pub last_edited_by: Option<UserCommon>, 
 }
 
 #[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Clone)]
