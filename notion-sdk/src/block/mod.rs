@@ -407,6 +407,7 @@ pub struct TextAndChildren {
 pub struct HeadingText {
     pub rich_text: Vec<RichText>,
     pub color: TextColor,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub is_toggleable: Option<bool>,
 }
 
