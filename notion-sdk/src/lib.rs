@@ -14,7 +14,7 @@
 //! async fn main(){
 //!     let notion = NotionApi::new("token")?;
 //!     let me = notion.users_me().await;
-//!     debug!("{:#?}", me);
+//!     println!("{:#?}", me);
 //! }
 //!
 //! ```
@@ -32,7 +32,7 @@ use crate::error::Error;
 use crate::pagination::Object;
 use reqwest::{ClientBuilder, RequestBuilder};
 
-use log::{info, debug};
+use log::{info};
 
 const NOTION_API_VERSION: &str = "2022-02-22";
 
@@ -73,27 +73,27 @@ impl NotionApi {
         let request = request.build()?;
 
         // Print request method and URL
-        debug!("🔸 Request Method: {}", request.method());
-        debug!("🔸 Request URL: {}", request.url());
+        log!("🔸 Request Method: {}", request.method());
+        log!("🔸 Request URL: {}", request.url());
 
         // Print all request headers
-        debug!("🔸 Request Headers:");
+        log!("🔸 Request Headers:");
         for (key, value) in request.headers().iter() {
-            debug!("    {}: {:?}", key, value);
+            log!("    {}: {:?}", key, value);
         }
 
         // Attempt to print the request body (if present and accessible)
         if let Some(body) = request.body() {
             if let Some(bytes) = body.as_bytes() {
                 match std::str::from_utf8(bytes) {
-                    Ok(text) => debug!("🔸 Request Body:\n{}", text),
-                    Err(_) => debug!("🔸 Request body is not valid UTF-8 and cannot be displayed as text"),
+                    Ok(text) => println!("🔸 Request Body:\n{}", text),
+                    Err(_) => log!("🔸 Request body is not valid UTF-8 and cannot be displayed as text"),
                 }
             } else {
-                debug!("🔸 Request body is not accessible as raw bytes (possibly streamed)");
+                log!("🔸 Request body is not accessible as raw bytes (possibly streamed)");
             }
         } else {
-            debug!("🔸 No request body");
+            log!("🔸 No request body");
         }
 
         // Execute the HTTP request
@@ -110,7 +110,7 @@ impl NotionApi {
             .map_err(|source| Error::ResponseIoError { source })?;
 
         // Optionally print the raw response body
-        debug!("🔹 Response Body:\n{}", json);
+        log!("🔹 Response Body:\n{}", json);
 
         // Parse the JSON response into Object
         let result =
