@@ -376,7 +376,7 @@ pub struct BlockCommon {
     pub created_time: DateTime<Utc>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub last_edited_time: DateTime<Utc>,
-    pub has_children: bool,
+    pub has_children: Option<bool>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub created_by: Option<UserCommon>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -409,7 +409,7 @@ pub struct TextAndChildren {
 pub struct HeadingText {
     pub rich_text: Vec<RichText>,
     pub color: TextColor,
-    pub is_toggleable: bool,
+    pub is_toggleable: Option<bool>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Clone)]
