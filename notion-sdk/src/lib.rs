@@ -32,7 +32,7 @@ use crate::error::Error;
 use crate::pagination::Object;
 use reqwest::{ClientBuilder, RequestBuilder};
 
-use log::{info,debug};
+use log::{info, debug};
 
 const NOTION_API_VERSION: &str = "2022-02-22";
 
@@ -74,7 +74,7 @@ impl NotionApi {
 
         // Print request method and URL
         debug!("🔸 Request Method: {}", request.method());
-        info!("🔸 Request URL: {}", request.url());
+        println!("🔸 Request URL: {}", request.url());
 
         // Print all request headers
         info!("🔸 Request Headers:");
@@ -87,13 +87,13 @@ impl NotionApi {
             if let Some(bytes) = body.as_bytes() {
                 match std::str::from_utf8(bytes) {
                     Ok(text) => println!("🔸 Request Body:\n{}", text),
-                    Err(_) => info!("🔸 Request body is not valid UTF-8 and cannot be displayed as text"),
+                    Err(_) => println!("🔸 Request body is not valid UTF-8 and cannot be displayed as text"),
                 }
             } else {
-                info!("🔸 Request body is not accessible as raw bytes (possibly streamed)");
+                println!("🔸 Request body is not accessible as raw bytes (possibly streamed)");
             }
         } else {
-            info!("🔸 No request body");
+            println!("🔸 No request body");
         }
 
         // Execute the HTTP request
@@ -110,7 +110,7 @@ impl NotionApi {
             .map_err(|source| Error::ResponseIoError { source })?;
 
         // Optionally print the raw response body
-        info!("🔹 Response Body:\n{}", json);
+        println!("🔹 Response Body:\n{}", json);
 
         // Parse the JSON response into Object
         let result =
