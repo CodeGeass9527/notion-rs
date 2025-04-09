@@ -32,7 +32,9 @@ use crate::error::Error;
 use crate::pagination::Object;
 use reqwest::{ClientBuilder, RequestBuilder};
 
-const NOTION_API_VERSION: &str = "2022-02-22";
+use log::{info, debug};
+
+const NOTION_API_VERSION: &str = "2025-04-09";
 
 /// Notion Api Client
 #[derive(Debug, Clone)]
@@ -67,17 +69,54 @@ impl NotionApi {
 
 impl NotionApi {
     async fn request(&self, request: RequestBuilder) -> Result<Object, Error> {
+        // Build the actual HTTP request from the builder
         let request = request.build()?;
-        let json = self
+
+        // Print request method and URL
+        debug!("🔸 Request Method: {}", request.method());
+        debug!("🔸 Request URL: {}", request.url());
+
+        // Print all request headers
+        debug!("🔸 Request Headers:");
+        for (key, value) in request.headers().iter() {
+            debug!("    {}: {:?}", key, value);
+        }
+
+        // Attempt to print the request body (if present and accessible)
+        if let Some(body) = request.body() {
+            if let Some(bytes) = body.as_bytes() {
+                match std::str::from_utf8(bytes) {
+                    Ok(text) => debug!("🔸 Request Body:\n{}", text),
+                    Err(_) => debug!("🔸 Request body is not valid UTF-8 and cannot be displayed as text"),
+                }
+            } else {
+                debug!("🔸 Request body is not accessible as raw bytes (possibly streamed)");
+            }
+        } else {
+            debug!("🔸 No request body");
+        }
+
+        // Execute the HTTP request
+        let response = self
             .client
             .execute(request)
             .await
-            .map_err(|source| Error::RequestFailed { source })?
+            .map_err(|source| Error::RequestFailed { source })?;
+
+        // Read the full response body as a string
+        let json = response
             .text()
             .await
             .map_err(|source| Error::ResponseIoError { source })?;
+
+        // Optionally print the raw response body
+        debug!("🔹 Response Body:\n{}", json);
+
+        // Parse the JSON response into Object
         let result =
             serde_json::from_str(&json).map_err(|source| Error::JsonParseError { source })?;
+
+        // Handle API errors or return the result
         match result {
             Object::Error { error } => Err(Error::ApiError { error }),
             response => Ok(response),
