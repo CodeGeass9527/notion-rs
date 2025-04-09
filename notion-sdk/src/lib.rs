@@ -32,7 +32,7 @@ use crate::error::Error;
 use crate::pagination::Object;
 use reqwest::{ClientBuilder, RequestBuilder};
 
-use log::{info, debug};
+// use log::{info, debug};
 
 const NOTION_API_VERSION: &str = "2022-02-22";
 
@@ -73,13 +73,13 @@ impl NotionApi {
         let request = request.build()?;
 
         // Print request method and URL
-        debug!("🔸 Request Method: {}", request.method());
+        println!("🔸 Request Method: {}", request.method());
         println!("🔸 Request URL: {}", request.url());
 
         // Print all request headers
-        info!("🔸 Request Headers:");
+        println!("🔸 Request Headers:");
         for (key, value) in request.headers().iter() {
-            info!("    {}: {:?}", key, value);
+            println!("    {}: {:?}", key, value);
         }
 
         // Attempt to print the request body (if present and accessible)
