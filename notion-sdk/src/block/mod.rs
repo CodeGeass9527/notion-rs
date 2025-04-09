@@ -370,12 +370,10 @@ pub struct TableRowFields {
 #[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Clone)]
 pub struct BlockCommon {
     pub object: String, // default "block"
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub id: BlockId,
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub created_time: DateTime<Utc>,
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub last_edited_time: DateTime<Utc>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub has_children: Option<bool>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub created_by: Option<UserCommon>,
@@ -389,7 +387,7 @@ impl Default for BlockCommon {
             id: BlockId(uuid::Uuid::new_v4()),
             created_time: Utc::now(),
             last_edited_time: Utc::now(),
-            has_children: false,
+            has_children: Some(false),
             created_by: None,
             last_edited_by: None,
             object: String::from("block"),
