@@ -68,6 +68,7 @@ pub struct Annotations {
 #[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Clone)]
 pub struct Text {
     pub content: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub link: Option<Link>,
 }
 
