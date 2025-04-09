@@ -14,7 +14,7 @@
 //! async fn main(){
 //!     let notion = NotionApi::new("token")?;
 //!     let me = notion.users_me().await;
-//!     println!("{:#?}", me);
+//!     debug!("{:#?}", me);
 //! }
 //!
 //! ```
@@ -34,7 +34,7 @@ use reqwest::{ClientBuilder, RequestBuilder};
 
 use log::{info, debug};
 
-const NOTION_API_VERSION: &str = "2025-04-09";
+const NOTION_API_VERSION: &str = "2022-02-22";
 
 /// Notion Api Client
 #[derive(Debug, Clone)]
