@@ -369,12 +369,27 @@ pub struct TableRowFields {
 
 #[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Clone)]
 pub struct BlockCommon {
+    pub object: String, // default "block"
     pub id: BlockId,
     pub created_time: DateTime<Utc>,
     pub last_edited_time: DateTime<Utc>,
     pub has_children: bool,
     pub created_by: Option<UserCommon>,
     pub last_edited_by: Option<UserCommon>, 
+}
+
+impl Default for BlockCommon {
+    fn default() -> Self {
+        BlockCommon {
+            id: BlockId(uuid::Uuid::new_v4()),
+            created_time: Utc::now(),
+            last_edited_time: Utc::now(),
+            has_children: false,
+            created_by: None,
+            last_edited_by: None,
+            object: String::from("block"),
+        }
+    }
 }
 
 #[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Clone)]
